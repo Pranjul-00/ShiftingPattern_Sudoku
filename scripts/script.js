@@ -68,14 +68,38 @@ function checkSolution() {
     }
 }
 
-// Calculate what the value should be based on the pattern
+// Calculate what the value should be based on the shifting pattern
 function calculateCorrectValue(row, col) {
-    // This implements your described pattern
-    const baseNumber = (Math.floor(col / 3) + row) % 9 + 1;
-    const shift = (col % 3) * 3;
-    const finalNumber = (baseNumber + shift - 1) % 9 + 1;
+    // Implement the user's shifting pattern:
+    // Col 0: 1 at (0,0), 2 at (1,0), ..., 9 at (8,0)
+    // Col 1: 1 at (3,1), 2 at (4,1), ..., wrapping around
+    // Col 2: 1 at (6,2), 2 at (7,2), ..., wrapping around
+    // Col 3: 2 at (0,3), 3 at (1,3), ..., wrapping around
+    // And so on...
     
-    return finalNumber.toString();
+    const colGroup = Math.floor(col / 3); // 0, 1, or 2
+    const colInGroup = col % 3; // 0, 1, or 2
+    
+    // Starting number for this column group
+    const startingNumber = colGroup + 1; // 1, 2, or 3
+    
+    // Starting row for this column within the group
+    const startingRow = colInGroup * 3; // 0, 3, or 6
+    
+    // Calculate the actual number at this position
+    let number;
+    if (row >= startingRow) {
+        number = startingNumber + (row - startingRow);
+    } else {
+        number = startingNumber + (row - startingRow + 9);
+    }
+    
+    // Wrap around if number exceeds 9
+    if (number > 9) {
+        number = number - 9;
+    }
+    
+    return number.toString();
 }
 
 function resetGrid() {
@@ -98,6 +122,19 @@ function showHint() {
         const col = parseInt(randomInput.dataset.col);
         randomInput.value = calculateCorrectValue(row, col);
     }
+}
+
+function showSolution() {
+    // Fill the entire grid with the correct solution
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+            input.value = calculateCorrectValue(row, col);
+        }
+    }
+    
+    const message = document.getElementById('message');
+    message.innerHTML = '<p style="color: #dc143c;">Complete solution displayed! Study the pattern.</p>';
 }
 
 // Initialize the grid when page loads
