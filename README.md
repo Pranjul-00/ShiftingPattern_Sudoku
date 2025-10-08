@@ -17,7 +17,7 @@ A modern web application built with **React TypeScript** frontend and **FastAPI*
 ### Frontend (React + TypeScript)
 - **Framework**: React 18 with TypeScript
 - **Components**: Modular component architecture
-- **Styling**: CSS modules with responsive design
+- **Styling**: CSS-in-JS with styled-components
 - **API Client**: Axios for HTTP requests
 - **Type Safety**: Full TypeScript integration
 
@@ -37,9 +37,6 @@ A modern web application built with **React TypeScript** frontend and **FastAPI*
 ```bash
 # Build and run with Docker Compose
 docker-compose up --build
-
-# Or use the shell script
-chmod +x docker-run.sh && ./docker-run.sh
 ```
 
 ### Option 2: Manual Setup
@@ -97,7 +94,7 @@ ShiftingPattern_Sudoku/
 │   ├── public/
 │   │   └── index.html           # HTML template
 │   ├── src/
-│   │   ├── components/          # React components
+│   │   ├── components/          # React components (with styled-components)
 │   │   │   ├── SudokuGame.tsx
 │   │   │   ├── SudokuGrid.tsx
 │   │   │   ├── Instructions.tsx
@@ -108,11 +105,14 @@ ShiftingPattern_Sudoku/
 │   │   ├── types/
 │   │   │   └── index.ts         # TypeScript type definitions
 │   │   ├── App.tsx              # Main App component
+│   │   ├── GlobalStyles.tsx     # Global styled-components
 │   │   └── index.tsx            # React entry point
 │   ├── package.json             # Node.js dependencies
 │   └── tsconfig.json            # TypeScript configuration
+├── .gitattributes               # Git language detection rules
 ├── requirements.txt             # Python dependencies
-├── start-dev.sh                 # Development startup script
+├── compose.yaml                 # Docker Compose configuration
+├── Dockerfile                   # Docker container configuration
 └── README.md                    # This file
 ```
 
