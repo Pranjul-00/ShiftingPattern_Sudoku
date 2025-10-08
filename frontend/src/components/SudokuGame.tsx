@@ -1,10 +1,23 @@
 import React, { useState, useCallback } from 'react';
+import styled from 'styled-components';
 import { GridType, ValidationError } from '../types';
 import { api } from '../services/api';
 import SudokuGrid from './SudokuGrid';
 import Controls from './Controls';
 import Message from './Message';
-import './SudokuGame.css';
+
+const GameContainer = styled.div`
+  background: rgba(139, 69, 19, 0.15);
+  border: 2px solid #8b4513;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+`;
 
 const SudokuGame: React.FC = () => {
   const [grid, setGrid] = useState<GridType>(() => 
@@ -92,7 +105,7 @@ const SudokuGame: React.FC = () => {
   };
 
   return (
-    <div className="sudoku-game">
+    <GameContainer>
       <SudokuGrid 
         grid={grid}
         errors={errors}
@@ -108,7 +121,7 @@ const SudokuGame: React.FC = () => {
       />
       
       <Message message={message} errors={errors} />
-    </div>
+    </GameContainer>
   );
 };
 
