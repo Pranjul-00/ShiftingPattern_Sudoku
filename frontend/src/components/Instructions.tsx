@@ -1,7 +1,68 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { PatternInfo } from '../types';
 import { api } from '../services/api';
-import './Instructions.css';
+
+const InstructionsContainer = styled.div`
+  background: rgba(139, 69, 19, 0.2);
+  border: 2px solid #8b4513;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  flex: 1;
+  max-width: 500px;
+`;
+
+const Title = styled.h1`
+  color: #dc143c;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  margin-top: 0;
+  font-size: 1.5rem;
+`;
+
+const OrderedList = styled.ol`
+  color: #f4e6d7;
+  padding-left: 1.2rem;
+`;
+
+const ListItem = styled.li`
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+`;
+
+const UnorderedList = styled.ul`
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  
+  li {
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+  }
+`;
+
+const Paragraph = styled.p`
+  line-height: 1.5;
+  margin-bottom: 1rem;
+`;
+
+const Emphasis = styled.em`
+  color: #dc143c;
+  font-weight: bold;
+`;
+
+const LoadingText = styled.div`
+  text-align: center;
+  padding: 2rem;
+  color: #f4e6d7;
+  font-style: italic;
+`;
+
+const ErrorText = styled.div`
+  text-align: center;
+  padding: 2rem;
+  color: #dc143c;
+  font-style: italic;
+`;
 
 const Instructions: React.FC = () => {
   const [patternInfo, setPatternInfo] = useState<PatternInfo | null>(null);
@@ -59,38 +120,38 @@ const Instructions: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="instructions">
-        <div className="loading">Loading instructions...</div>
-      </div>
+      <InstructionsContainer>
+        <LoadingText>Loading instructions...</LoadingText>
+      </InstructionsContainer>
     );
   }
 
   if (!patternInfo) {
     return (
-      <div className="instructions">
-        <div className="error">Failed to load instructions</div>
-      </div>
+      <InstructionsContainer>
+        <ErrorText>Failed to load instructions</ErrorText>
+      </InstructionsContainer>
     );
   }
 
   return (
-    <div className="instructions">
-      <h1>{patternInfo.title}</h1>
-      <p>{patternInfo.description}:</p>
-      <ol>
+    <InstructionsContainer>
+      <Title>{patternInfo.title}</Title>
+      <Paragraph>{patternInfo.description}:</Paragraph>
+      <OrderedList>
         {patternInfo.rules.map((rule, index) => (
-          <li key={index}>
+          <ListItem key={index}>
             <strong>{rule.group}:</strong> Start with number {rule.start_number}
-            <ul>
+            <UnorderedList>
               {rule.details.map((detail, detailIndex) => (
                 <li key={detailIndex}>{detail}</li>
               ))}
-            </ul>
-          </li>
+            </UnorderedList>
+          </ListItem>
         ))}
-      </ol>
-      <p><em>{patternInfo.note}</em></p>
-    </div>
+      </OrderedList>
+      <Paragraph><Emphasis>{patternInfo.note}</Emphasis></Paragraph>
+    </InstructionsContainer>
   );
 };
 

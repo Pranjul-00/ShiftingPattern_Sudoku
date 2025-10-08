@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -116,7 +115,6 @@ dist
 
 # Gatsby files
 .cache/
-public
 
 # Storybook build outputs
 .out
@@ -142,9 +140,6 @@ temp/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Docker
-.dockerignore
 
 # Database
 *.db
@@ -175,3 +170,5 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+package-lock.json
