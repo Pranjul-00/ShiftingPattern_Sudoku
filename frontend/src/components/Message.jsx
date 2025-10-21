@@ -1,12 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { ValidationError } from '../types';
 
-interface MessageContainerProps {
-  $type: 'success' | 'error' | 'info' | 'default';
-}
-
-const MessageContainer = styled.div<MessageContainerProps>`
+const MessageContainer = styled.div`
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 5px;
@@ -66,17 +61,12 @@ const ErrorDetails = styled.div`
   }
 `;
 
-interface MessageProps {
-  message: string;
-  errors: ValidationError[];
-}
-
-const Message: React.FC<MessageProps> = ({ message, errors }) => {
+const Message = ({ message, errors }) => {
   if (!message && (!errors || errors.length === 0)) {
     return null;
   }
 
-  const getMessageType = (): 'success' | 'error' | 'info' | 'default' => {
+  const getMessageType = () => {
     if (message.includes('Congratulations')) return 'success';
     if (message.includes('incorrect') || message.includes('Error')) return 'error';
     if (message.includes('Hint') || message.includes('solution displayed')) return 'info';

@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { GridType, ValidationError } from '../types';
 import { api } from '../services/api';
 import SudokuGrid from './SudokuGrid';
 import Controls from './Controls';
@@ -19,15 +18,15 @@ const GameContainer = styled.div`
   gap: 1.5rem;
 `;
 
-const SudokuGame: React.FC = () => {
-  const [grid, setGrid] = useState<GridType>(() => 
+const SudokuGame = () => {
+  const [grid, setGrid] = useState(() => 
     Array(9).fill(null).map(() => Array(9).fill(''))
   );
-  const [errors, setErrors] = useState<ValidationError[]>([]);
-  const [message, setMessage] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState([]);
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleCellChange = useCallback((row: number, col: number, value: string) => {
+  const handleCellChange = useCallback((row, col, value) => {
     // Validate input (only numbers 1-9 or empty)
     if (value !== '' && (!/^[1-9]$/.test(value))) {
       return;
@@ -44,7 +43,7 @@ const SudokuGame: React.FC = () => {
     setMessage('');
   }, []);
 
-  const checkSolution = async (): Promise<void> => {
+  const checkSolution = async () => {
     setLoading(true);
     try {
       const response = await api.validateGrid(grid);
@@ -60,13 +59,13 @@ const SudokuGame: React.FC = () => {
     }
   };
 
-  const resetGrid = (): void => {
+  const resetGrid = () => {
     setGrid(Array(9).fill(null).map(() => Array(9).fill('')));
     setErrors([]);
     setMessage('');
   };
 
-  const showHint = async (): Promise<void> => {
+  const showHint = async () => {
     setLoading(true);
     try {
       const response = await api.getHint();
@@ -87,7 +86,7 @@ const SudokuGame: React.FC = () => {
     }
   };
 
-  const showSolution = async (): Promise<void> => {
+  const showSolution = async () => {
     setLoading(true);
     try {
       const response = await api.getSolution();

@@ -22,7 +22,7 @@ const Container = styled.div`
   }
 `;
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <AppContainer>
       <Container>

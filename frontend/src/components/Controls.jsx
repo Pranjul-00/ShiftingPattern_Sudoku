@@ -14,11 +14,7 @@ const ControlsContainer = styled.div`
   }
 `;
 
-interface ButtonProps {
-  $variant: 'primary' | 'secondary' | 'hint' | 'solution';
-}
-
-const Button = styled.button<ButtonProps>`
+const Button = styled.button`
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   background: linear-gradient(145deg, #8b4513, #654321);
@@ -72,15 +68,7 @@ const Button = styled.button<ButtonProps>`
   }
 `;
 
-interface ControlsProps {
-  onCheckSolution: () => void;
-  onReset: () => void;
-  onShowHint: () => void;
-  onShowSolution: () => void;
-  loading: boolean;
-}
-
-const Controls: React.FC<ControlsProps> = ({ 
+const Controls = ({ 
   onCheckSolution, 
   onReset, 
   onShowHint, 

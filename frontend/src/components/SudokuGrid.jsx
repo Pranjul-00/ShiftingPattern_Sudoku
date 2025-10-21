@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { GridType, ValidationError } from '../types';
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -24,14 +23,7 @@ const Grid = styled.div`
   }
 `;
 
-interface CellProps {
-  $isError: boolean;
-  $isCorrect: boolean;
-  $thickRight: boolean;
-  $thickBottom: boolean;
-}
-
-const Cell = styled.div<CellProps>`
+const Cell = styled.div`
   width: 50px;
   height: 50px;
   border: 1px solid #654321;
@@ -71,12 +63,7 @@ const Cell = styled.div<CellProps>`
   }
 `;
 
-interface CellInputProps {
-  $isError: boolean;
-  $isCorrect: boolean;
-}
-
-const CellInput = styled.input<CellInputProps>`
+const CellInput = styled.input`
   width: 100%;
   height: 100%;
   border: none;
@@ -101,18 +88,12 @@ const CellInput = styled.input<CellInputProps>`
   }
 `;
 
-interface SudokuGridProps {
-  grid: GridType;
-  errors: ValidationError[];
-  onCellChange: (row: number, col: number, value: string) => void;
-}
-
-const SudokuGrid: React.FC<SudokuGridProps> = ({ grid, errors, onCellChange }) => {
-  const isError = (row: number, col: number): boolean => {
+const SudokuGrid = ({ grid, errors, onCellChange }) => {
+  const isError = (row, col) => {
     return errors.some(error => error.row === row && error.col === col);
   };
 
-  const isCorrect = (row: number, col: number): boolean => {
+  const isCorrect = (row, col) => {
     const value = grid[row][col];
     return value !== '' && !isError(row, col);
   };
